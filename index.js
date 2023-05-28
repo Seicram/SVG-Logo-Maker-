@@ -1,4 +1,4 @@
-// import inquirer module 
+//  Code for the SVG Logo Maker application
 const inquirer = require('inquirer');
 const fs = require('fs');
 
@@ -18,6 +18,7 @@ const questions = [
       return true;
     },
   },
+  
   // prompt user to select a shape
   {
     type: 'list',
@@ -25,12 +26,14 @@ const questions = [
     message: 'Select a shape:',
     choices: ['circle', 'triangle', 'square'],
   },
+  
   // prompt user to select a shape color
   {
     type: 'input',
     name: 'shapeColor',
     message: 'Enter the shape color (color keyword or hexadecimal number):',
     validate: function (input) {
+
       // Regular expression to match valid color keywords or hexadecimal numbers
       const colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$|^(?:(?:rgb|hsl)a?\([-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?%?(?:,[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?%?){2,3}\)|[a-z]+)$/i;
       if (!colorRegex.test(input)) {
@@ -39,12 +42,14 @@ const questions = [
       return true;
     },
   },
+  
   // prompt user to select a text color
   {
     type: 'input',
     name: 'textColor',
     message: 'Enter the text color (color keyword or hexadecimal number):',
     validate: function (input) {
+      
       // Regular expression to match valid color keywords or hexadecimal numbers
       const colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$|^(?:(?:rgb|hsl)a?\([-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?%?(?:,[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?%?){2,3}\)|[a-z]+)$/i;
       if (!colorRegex.test(input)) {
@@ -56,28 +61,27 @@ const questions = [
 ];
 
   
-// prompt user for input and log it to the console when done 
+// prompt user to input text, shape, shape color, and text color
 inquirer.prompt(questions).then((answers) => {
   const userInput = answers.textInput.trim();
   const shape = answers.shape;
   const shapeColor = answers.shapeColor.trim();
   const textColor = answers.textColor.trim();
-  console.log('User input:', userInput);
-  console.log('Shape:', shape);
-  console.log('Shape color:', shapeColor);
-  console.log('Text color:', textColor);
+
 
   // Generate the SVG content based on user inputs
-  const svgContent = `<svg width="200" height="200">
-    <text x="50%" y="50%" text-anchor="middle" fill="${textColor}" style="font-size: 20px;">${userInput}</text>
-    <${shape} cx="100" cy="100" r="50" fill="${shapeColor}"></${shape}>
-  </svg>`;
+  const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200">
+  <rect width="300" height="200" fill="${shapeColor}" />
+  <text x="50%" y="50%" fill="${textColor}" text-anchor="middle" dominant-baseline="middle">${userInput}</text>
+</svg>`;
 
-  // Write the SVG content to a file named "logo.svg"
+  // Write the SVG content to logo.svg
   fs.writeFile('logo.svg', svgContent, (err) => {
-    if (err) throw err;
-    console.log('logo.svg file created successfully!');
-    console.log('Generated logo.svg'); // Print output text
+    if (err) {
+      console.error('Error generating logo.svg:', err);
+    } else {
+      console.log('Generated logo.svg');
+    }
   });
 });
 
