@@ -1,5 +1,6 @@
 // import inquirer module 
 const inquirer = require('inquirer');
+const fs = require('fs');
 
 // questions for user to input text
 const questions = [
@@ -57,8 +58,26 @@ const questions = [
   
 // prompt user for input and log it to the console when done 
 inquirer.prompt(questions).then((answers) => {
-    const userInput = answers.textInput.trim();
-    const textColor = answers.textColor.trim();
-    console.log('User input:', userInput);
-    console.log('Text color:', textColor);
+  const userInput = answers.textInput.trim();
+  const shape = answers.shape;
+  const shapeColor = answers.shapeColor.trim();
+  const textColor = answers.textColor.trim();
+  console.log('User input:', userInput);
+  console.log('Shape:', shape);
+  console.log('Shape color:', shapeColor);
+  console.log('Text color:', textColor);
+
+  // Generate the SVG content based on user inputs
+  const svgContent = `<svg width="200" height="200">
+    <text x="50%" y="50%" text-anchor="middle" fill="${textColor}" style="font-size: 20px;">${userInput}</text>
+    <${shape} cx="100" cy="100" r="50" fill="${shapeColor}"></${shape}>
+  </svg>`;
+
+  // Write the SVG content to a file named "logo.svg"
+  fs.writeFile('logo.svg', svgContent, (err) => {
+    if (err) throw err;
+    console.log('logo.svg file created successfully!');
+    console.log('Generated logo.svg'); // Print output text
   });
+});
+
