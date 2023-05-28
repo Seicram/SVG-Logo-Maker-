@@ -1,5 +1,5 @@
 // index.js
 
-const logoGenerator = require('./lib/logoGenerator');
+const { generateLogo } = require('./lib/logoGenerator');
 
-logoGenerator.generateLogo();
+generateLogo();

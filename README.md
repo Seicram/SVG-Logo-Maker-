@@ -56,6 +56,7 @@ To use some common JavaScript libraries, you can install the following packages 
 ## Links
 
 - [GitHub Repository](https://github.com/Seicram/SVG-Logo-Maker-)
+- [Demo Video](https://drive.google.com/file/d/1So-WQX4MdkvM_4VQFqJXwZ4IC_YpS-UC/view)
 
 ## License
 
